@@ -46,9 +46,45 @@ public class Board {
         }
         return diff;
     }
-
-    // sum of Manhattan distances between tiles and goal
+// sum of Manhattan distances between tiles and goal
     public int manhattan() {
+        int man = 0;
+        int content;
+        int x, y;
+        int indexCombination;
+        int shouldCombination;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+
+
+                //1. get contents at index i, j
+                content = board[i][j];
+                if (content == 0) {
+                    x = dimension() - 1;
+                    y = dimension() - 1;
+
+                } else {
+
+                    //2. what is content's corresponding index in terms of nx n grid?
+                    x = content / dimension();
+                    y = content % dimension() -1;
+                    if(y < 0) y = y * -1;
+                }
+                    indexCombination = x + y;
+                    shouldCombination = i + j;
+
+                    //3. what is the distance between should and is index
+                    man += Math.abs(indexCombination - shouldCombination);
+
+
+
+            }
+
+        }
+        return man;
+    }
+    // sum of Manhattan distances between tiles and goal
+   /* public int manhattan() {
         int man = 0;
         int content;
         int x, y;
@@ -58,24 +94,24 @@ public class Board {
 
                 //1. get contents at index i, j
                 content = board[i][j];
+                if (content == 0) {
+                    x = dimension() - 1;
+                    y = dimension() - 1;
 
+                } else {
+                    //2. what is content's corresponding index in terms of nx n grid?
+                    x = content / dimension();
+                    y = (content % dimension()) - 1;
 
-                //2. what is content's corresponding index in terms of nx n grid?
-                x = content / dimension();
-                y = content % dimension();
-
-                if (content != 0) {
-
-                    //3. what is the distance between should and is index
-                    man += Math.abs(j - x);
-                    man += Math.abs(i - y);
-                    man--; //account fo 1 based indexing
                 }
+                //3. what is the distance between should and is index
+                man +=  Math.abs(j - Math.abs(x));
+                man +=  Math.abs(i-  Math.abs(y));
+                if(man!=0)man--;
             }
-
         }
         return man;
-    }
+    }*/
   /*//
     // is this board the goal board?
     public boolean isGoal()
@@ -93,9 +129,9 @@ public class Board {
 
     public static void main(String[] args) {
         int[][] testArray = {
-                { 8, 1, 3 },
-                { 4, 0, 2 },
-                { 7, 6, 5 }
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 0 }
         };
 
         Board b = new Board(testArray);
@@ -103,7 +139,7 @@ public class Board {
         System.out.println(b.toString());
         System.out.println(b.dimension());
         System.out.println(b.hamming());
-        System.out.println(b.manhattan());
+        System.out.println( b.manhattan());
     }
 
 }
