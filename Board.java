@@ -1,10 +1,11 @@
 public class Board {
 
-    private static int[][] goalBoard = {
+    private static int[][] goalArray = {
             { 1, 2, 3 },
             { 4, 5, 6 },
             { 7, 8, 0 }
     };
+    private static Board goalBoard = new Board(goalArray);
     private int[][] board;
 
 
@@ -40,7 +41,7 @@ public class Board {
         int diff = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] != goalBoard[i][j] && board[i][j] != 0) diff++;
+                if (board[i][j] != goalArray[i][j] && board[i][j] != 0) diff++;
 
             }
         }
@@ -83,41 +84,33 @@ public class Board {
         }
         return man;
     }
-    // sum of Manhattan distances between tiles and goal
-   /* public int manhattan() {
-        int man = 0;
-        int content;
-        int x, y;
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-
-
-                //1. get contents at index i, j
-                content = board[i][j];
-                if (content == 0) {
-                    x = dimension() - 1;
-                    y = dimension() - 1;
-
-                } else {
-                    //2. what is content's corresponding index in terms of nx n grid?
-                    x = content / dimension();
-                    y = (content % dimension()) - 1;
-
-                }
-                //3. what is the distance between should and is index
-                man +=  Math.abs(j - Math.abs(x));
-                man +=  Math.abs(i-  Math.abs(y));
-                if(man!=0)man--;
-            }
+    //does this board equal y?
+    @Override
+    public boolean equals(Object y){
+        if(y == this){
+            return true;
         }
-        return man;
-    }*/
-  /*//
-    // is this board the goal board?
-    public boolean isGoal()
+        if(y == null){
+            return false;
+        }
+    if(!(y.getClass() == this.getClass())){
+        return false;
+    }
+    if(((Board) y).dimension() != this.dimension() || ((Board) y).manhattan() != this.manhattan()){
+        return false;
+    }
+    return true;
 
-    // does this board equal y?
-    public boolean equals(Object y)
+    }
+    // is this board the goal board?
+    public boolean isGoal(){
+
+        return this.equals(goalBoard);
+    }
+  /*//
+
+
+
 
     // all neighboring boards
     public Iterable<Board> neighbors()
@@ -135,11 +128,13 @@ public class Board {
         };
 
         Board b = new Board(testArray);
-
+        Board c = new Board(testArray);
         System.out.println(b.toString());
         System.out.println(b.dimension());
         System.out.println(b.hamming());
         System.out.println( b.manhattan());
+        System.out.println(b.equals(c));
+        System.out.println(b.isGoal());
     }
 
 }
