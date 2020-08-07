@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Board {
 
     private int[][] board;
+    private int[] emptyTile;
 
     public final void swapTiles(int x1, int y1, int x2, int y2){
         int temp = this.board[x1][y1];
@@ -32,7 +33,17 @@ public class Board {
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
     public Board(int[][] tiles) {
-        board = tiles;
+
+        board = new int[tiles.length][tiles.length];
+        for(int i = 0; i< tiles.length; i++){
+            for(int j = 0; j <tiles.length; j++){
+                if(tiles[i][j] == 0){
+                    emptyTile= new int[]{i, j};
+                }
+                board[i][j] = tiles[i][j];
+            }
+        }
+
     }
 
     // string representation of this board
@@ -192,29 +203,58 @@ public class Board {
         }
 
 
-
-
-
-
-    //4. bottom   -1, 0
-
-    //2. copy the board in case any of the cases is true
-    // add each case to a stack of boards
-    //
-
         return listOfNeighbors;
 
     }
-/*//
-    // a board that is obtained by exchanging any pair of tiles
-    public Board twin()*/
 
+    // a board that is obtained by exchanging any pair of tiles
+    public Board twin(){
+
+        Board copy = new Board(this);
+
+
+
+      int i ,j, i2, j2 ;
+      //swap the first with the second
+      int first = 0;
+      int second = 3;
+
+      //convert first to 2d
+        i = first / dimension();
+        j = first % dimension();
+        i2 = second / dimension();
+        j2 = second / dimension();
+
+
+        //find first tile to swap
+        if (emptyTile[0] == i && emptyTile[1] == j) {
+            if (i + 1 < (dimension() - 1)) i++;
+            else {
+                if (j + 1 < (dimension() - 1)) j++;
+            }
+        }
+        //find second tile to swap
+            if (emptyTile[0] == i2 && emptyTile[1] == j2){
+                if(i2+1 < (dimension()-1))i2++;
+                else{
+                    if(j2+1 <(dimension()-1))j2++;
+                }
+
+
+
+        }
+
+      copy.swapTiles(i, j, i2, j2);
+     System.out.println("swapping " + i + " " + j + " with " + i2 + " " + j2);
+    return copy;
+
+    }
     // unit testing (not graded)
 
     public static void main(String[] args) {
         int[][] testArray = {
-                { 1, 2, 3 },
-                { 4, 0, 5 },
+                { 1, 0, 3 },
+                { 4, 2, 5 },
                 { 6, 7, 8}
         };
 
@@ -232,13 +272,10 @@ public class Board {
         System.out.println(test.toString());
         System.out.println(b.toString());
         Iterable<Board> neigh = new ArrayList<>();
-        neigh  = b.neighbors();
-        int count= 0;
-        for(Board n : neigh){
+        //neigh  = b.neighbors();
+        Board t =   b.twin();
 
-            System.out.println(count++ + "\n" + n.toString());
-
-        }
+        System.out.println("twin:\n"  + t.toString());
 
 
     }
