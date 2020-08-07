@@ -77,7 +77,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Board.java</url>
-          <line>136</line>
+          <line>156</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
