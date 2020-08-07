@@ -217,7 +217,7 @@ public class Board {
       int i ,j, i2, j2 ;
       //swap the first with the second
       int first = 0;
-      int second = 3;
+      int second = dimension();
 
       //convert first to 2d
         i = first / dimension();
@@ -235,9 +235,13 @@ public class Board {
         }
         //find second tile to swap
             if (emptyTile[0] == i2 && emptyTile[1] == j2){
+
                 if(i2+1 < (dimension()-1))i2++;
                 else{
                     if(j2+1 <(dimension()-1))j2++;
+                    else{
+                        j2 =( j2+1) % dimension();
+                    }
                 }
 
 
@@ -253,7 +257,7 @@ public class Board {
 
     public static void main(String[] args) {
         int[][] testArray = {
-                { 1, 0, 3 },
+                { 0, 1, 3 },
                 { 4, 2, 5 },
                 { 6, 7, 8}
         };
