@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
 
     private int[][] board;
@@ -126,15 +128,84 @@ public class Board {
         return this.equals(goalBoard);
     }
 
-
-  /*//
-
-
-
-
     // all neighboring boards
-    public Iterable<Board> neighbors()
+    public Iterable<Board> neighbors() {
+        ArrayList<Board> listOfNeighbors = new ArrayList<>();
+        int x= -1;
+        int y= -1;
+        outerloop:
+        for (int i = 0; i < dimension(); i++) {
+            for (int j =0 ; j < dimension(); j++) {
+                if (this.board[i][j] == 0) {
+                 x = i;
+                 y = j;
+                 break outerloop;
+                }
+            }
+        }
+       // System.out.println("found" + i + " " + j);
 
+
+
+       //go through each element int the board and see if it has a 0 to its
+
+        //1. left    0, -1
+        if(x < dimension() && (y-1) < dimension() && (y-1) >= 0){
+            //make a copy of our board
+            Board copyBoard = new Board(this);
+            copyBoard.swapTiles(x, y, x, y-1);
+
+            listOfNeighbors.add(copyBoard);
+
+        }
+
+            //2. right   0, +1
+
+        if(x < dimension() && (y +1) < dimension()){
+
+            System.out.println("i: "+  x + " j: " + y);
+            //make a copy of our board
+            Board copyBoard = new Board(this);
+            copyBoard.swapTiles(x, y, x, y+1);
+
+            listOfNeighbors.add(copyBoard);
+
+        }
+
+            //3. top     +1, 0
+        if(x+1 < dimension() && y < dimension()){
+            //make a copy of our board
+            Board copyBoard = new Board(this);
+            copyBoard.swapTiles(x, y, x+1, y);
+
+            listOfNeighbors.add(copyBoard);
+
+        }
+        //4. bottom   -1, 0
+        if(x-1 < dimension() && x -1 >= 0 && y < dimension()){
+            //make a copy of our board
+            Board copyBoard = new Board(this);
+            copyBoard.swapTiles(x, y, x-1, y);
+
+            listOfNeighbors.add(copyBoard);
+
+        }
+
+
+
+
+
+
+    //4. bottom   -1, 0
+
+    //2. copy the board in case any of the cases is true
+    // add each case to a stack of boards
+    //
+
+        return listOfNeighbors;
+
+    }
+/*//
     // a board that is obtained by exchanging any pair of tiles
     public Board twin()*/
 
@@ -143,8 +214,8 @@ public class Board {
     public static void main(String[] args) {
         int[][] testArray = {
                 { 1, 2, 3 },
-                { 4, 5, 6 },
-                { 7, 8, 0 }
+                { 4, 0, 5 },
+                { 6, 7, 8}
         };
 
         Board b = new Board(testArray);
@@ -157,9 +228,19 @@ public class Board {
         System.out.println(b.isGoal());
         Board test = new Board(b);
 
-        test.swapTiles(0, 0, 0, 1);
+
         System.out.println(test.toString());
         System.out.println(b.toString());
+        Iterable<Board> neigh = new ArrayList<>();
+        neigh  = b.neighbors();
+        int count= 0;
+        for(Board n : neigh){
+
+            System.out.println(count++ + "\n" + n.toString());
+
+        }
+
+
     }
 
 }
