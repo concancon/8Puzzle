@@ -5,7 +5,7 @@ public class Board {
     private int[][] board;
     private int[] emptyTile;
 
-    public final void swapTiles(int x1, int y1, int x2, int y2){
+    private void swapTiles(int x1, int y1, int x2, int y2){
         int temp = this.board[x1][y1];
         this.board[x1][y1] = this.board[x2][y2];
         this.board[x2][y2]= temp;
@@ -92,21 +92,22 @@ public class Board {
                 //1. get contents at index i, j
                 content = board[i][j];
                 if (content == 0) {
-                    x = dimension() - 1;
-                    y = dimension() - 1;
+                  //do nothing at all. this function only measures tiles
 
                 } else {
 
-                    //2. what is content's corresponding index in terms of nx n grid?
+                    //2. what is content's corresponding index in terms of an n x n grid?
                     x = content / dimension();
                     y = content % dimension() -1;
                     if(y < 0) y = y * -1;
-                }
                     indexCombination = x + y;
                     shouldCombination = i + j;
-
                     //3. what is the distance between should and is index
                     man += Math.abs(indexCombination - shouldCombination);
+                }
+
+
+
 
 
 
@@ -256,30 +257,17 @@ public class Board {
     // unit testing (not graded)
 
     public static void main(String[] args) {
+
         int[][] testArray = {
-                { 0, 1, 3 },
-                { 4, 2, 5 },
-                { 6, 7, 8}
+                { 1, 2, 3 },
+                { 4, 0, 5 },
+                { 7, 8, 6}
         };
 
         Board b = new Board(testArray);
-        Board c = new Board(testArray);
-        System.out.println(b.toString());
-        System.out.println(b.dimension());
-        System.out.println(b.hamming());
-        System.out.println( b.manhattan());
-        System.out.println(b.equals(c));
-        System.out.println(b.isGoal());
-        Board test = new Board(b);
+        System.out.println(b.manhattan());
 
 
-        System.out.println(test.toString());
-        System.out.println(b.toString());
-        Iterable<Board> neigh = new ArrayList<>();
-        //neigh  = b.neighbors();
-        Board t =   b.twin();
-
-        System.out.println("twin:\n"  + t.toString());
 
 
     }
