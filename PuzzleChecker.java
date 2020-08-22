@@ -23,8 +23,7 @@
  *  puzzle44.txt: 44
  *  puzzle45.txt: 45
  *
- ******************************************************************************//*
-
+ ******************************************************************************/
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
@@ -53,4 +52,3 @@ public class PuzzleChecker {
         }
     }
 }
-*/
