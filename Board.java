@@ -258,8 +258,8 @@ public class Board {
     public static void main(String[] args) {
 
         int[][] testArray = {
-                { 1, 0, 3 },
-                { 4, 2, 5 },
+                { 1, 2, 3 },
+                { 4, 5, 0 },
                 { 7, 8, 6 }
         };
 
@@ -270,6 +270,7 @@ public class Board {
         neigh = b.neighbors();
         for (Board n : neigh) {
             System.out.println(n.toString());
+            System.out.println(n.manhattan());
         }
         // System.out.println(b.neighbors());
 
