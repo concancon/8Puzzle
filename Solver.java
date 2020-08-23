@@ -65,7 +65,8 @@ public class Solver {
                 SearchNode newSearchNode = new SearchNode(n);
                 System.out.println("Priority: " + newSearchNode.priority);
                 //System.out.println("previous is: " + previous.board.toString());
-                SearchNode previousSearchNode = new SearchNode(previous);
+
+                SearchNode previousSearchNode = new SearchNode(this.searchNode.board);
                 newSearchNode.prev = previousSearchNode;
 
 
