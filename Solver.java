@@ -35,86 +35,55 @@ public class Solver {
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
 
-        this.searchNode = new SearchNode(initial);
+        // INITIALIZATION
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
+        this.searchNode = new SearchNode(initial);
+
         //add the initial searchnode to Gametree and pQ
         gameTree.add(this.searchNode);
         pq.insert(this.searchNode);
 
-        //remove the initial node from PQ
-        System.out.println("remove :" + pq.delMin().board);
-        System.out.println();
-
         //add the neighbors to tree
         //FIRST create an array for conversion
-        Iterable<Board> neighbors = initial.neighbors();
-        numberOfMoves++;
+        Iterable<Board> neighbors;
 
+        /////////////////////
 
-        for (Board n : neighbors) {
-            SearchNode newSearchNode = new SearchNode(n);
-            gameTree.add(newSearchNode);
-            pq.insert(newSearchNode);
-        }
-
-        for (int i = 0; i < gameTree.size(); i++) {
-            System.out.println(gameTree.get(i).board);
-            System.out.println(gameTree.get(i).priority);
-        }
-
-        //get the smallest item still on the PQ
-
-        System.out.println("smallest item still on the pQ: \n" + pq.min().board);
-
+        Board previous = initial;
         ////////////////////////////repetition
-        this.searchNode = new SearchNode(pq.min().board);
-        neighbors = pq.min().board.neighbors();
-        //remove the initial node from PQ
-        System.out.println("remove :" + pq.delMin().board);
-        numberOfMoves++;
+        while (!pq.min().board.isGoal()) {
+            this.searchNode = pq.min();
+            neighbors = pq.min().board.neighbors();
+            // remove the initial node from PQ
+            numberOfMoves++;
+            System.out.println("remove : \n" + pq.delMin().board);
 
-        for (Board n : neighbors) {
-            SearchNode newSearchNode = new SearchNode(n);
-            gameTree.add(newSearchNode);
-            pq.insert(newSearchNode);
+            for (Board n : neighbors) {
+
+
+                SearchNode newSearchNode = new SearchNode(n);
+                System.out.println("Priority: " + newSearchNode.priority);
+                //System.out.println("previous is: " + previous.board.toString());
+                SearchNode previousSearchNode = new SearchNode(previous);
+                newSearchNode.prev = previousSearchNode;
+
+
+                if (!newSearchNode.board.equals(previous)) {
+                    pq.insert(newSearchNode);
+                    gameTree.add(newSearchNode);
+                    System.out.println("new neigh \n" + newSearchNode.board.toString());
+                    //System.out.println("Previous is: \n" + newSearchNode.prev.board);
+                }
+            }
+
+            previous = pq.min().prev.board;
+            System.out.println("smallest item still on the pQ: \n" + pq.min().board);
+            System.out.println("its previous is: \n" + pq.min().prev.board);
         }
-        //get the smallest item still on the PQ
 
-        System.out.println("smallest item still on the pQ: \n" + pq.min().board);
-
-        ////////////////////////////repetition
-        this.searchNode = new SearchNode(pq.min().board);
-        neighbors = pq.min().board.neighbors();
-        //remove the initial node from PQ
-        System.out.println("remove :" + pq.delMin().board);
-        numberOfMoves++;
-
-        for (Board n : neighbors) {
-            SearchNode newSearchNode = new SearchNode(n);
-            gameTree.add(newSearchNode);
-            pq.insert(newSearchNode);
-        }
-        //get the smallest item still on the PQ
-
-        System.out.println("smallest item still on the pQ: \n" + pq.min().board);
-
-        ////////////////////////////repetition
-        this.searchNode = new SearchNode(pq.min().board);
-        neighbors = pq.min().board.neighbors();
-        //remove the initial node from PQ
-        System.out.println("remove :" + pq.delMin().board);
-        numberOfMoves++;
-
-        for (Board n : neighbors) {
-            SearchNode newSearchNode = new SearchNode(n);
-            gameTree.add(newSearchNode);
-            pq.insert(newSearchNode);
-        }
-        //get the smallest item still on the PQ
-
-        System.out.println("smallest item still on the pQ: \n" + pq.min().board);
-
+        System.out.println("number of moves: " + (numberOfMoves));
+        System.out.println(pq.min().board.isGoal());
     }
 
     // is the initial board solvable? (see below)

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board {
 
@@ -117,23 +118,38 @@ public class Board {
     }
 
     //does this board equal y?
+    //1) if the object passed to the equals method is null,
+    // then you need to return false. Obviously no object equals null.
+    // 2) if the object passed to the method points to the same memory address, then you return true.
+    // It means they are identical. In Java you check for identity via == operator.
+    // 3) check if they are instances of the same class either via getClass() method or
+    // using the instanceof keyword. Whichever you prefer. If they are instances of different classes,
+    // return false.
+    // 4) Lastly you need to compare arrays of the two objects involved.
+    // You can do that manually via loop or you can use a method from Java standard library -
+    // Arrays.equals. If the two arrays are equal, return true, and false otherwise.
+
     @Override
     public boolean equals(Object y) {
-        if (y == this) {
-            return true;
-        }
+
         if (y == null) {
             return false;
+        }
+        if (y == this) {
+            return true;
         }
         if (!(y.getClass() == this.getClass())) {
             return false;
         }
-        if (((Board) y).dimension() != this.dimension() || ((Board) y).manhattan() != this
-                .manhattan()) {
+
+
+        Board yBoard = (Board) y;
+        if (Arrays.deepEquals(this.board, yBoard.board)) {
+            return true;
+        }
+        else {
             return false;
         }
-        return true;
-
     }
 
     // is this board the goal board?
@@ -262,17 +278,16 @@ public class Board {
                 { 4, 5, 0 },
                 { 7, 8, 6 }
         };
-
+        int[][] copyArray = {
+                { 1, 2, 3 },
+                { 4, 5, 0 },
+                { 7, 8, 6 }
+        };
         Board b = new Board(testArray);
+        Board c = new Board(copyArray);
 
 
-        Iterable<Board> neigh = new ArrayList<>();
-        neigh = b.neighbors();
-        for (Board n : neigh) {
-            System.out.println(n.toString());
-            System.out.println(n.manhattan());
-        }
-        // System.out.println(b.neighbors());
+        System.out.println(b.equals(c));
 
 
     }
