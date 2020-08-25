@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,7 @@ public class Solver {
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
         this.searchNode = new SearchNode(initial);
+
 
         //add the initial searchnode to Gametree and pQ
         gameTree.add(this.searchNode);
@@ -114,6 +116,8 @@ public class Solver {
             for (int j = 0; j < n; j++)
                 tiles[i][j] = in.readInt();
         Board initial = new Board(tiles);
+        StdOut.println("new board of size" + initial.dimension());
+        initial.isGoal();
 
         // solve the puzzle
         Solver solver = new Solver(initial);

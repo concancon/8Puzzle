@@ -24,9 +24,9 @@ public class Board {
     }
 
     private static int[][] goalArray = {
-            { 1, 2, 3 },
-            { 4, 5, 6 },
-            { 7, 8, 0 }
+            { 1, 2 },
+            { 3, 0 }
+
     };
 
     private static Board goalBoard = new Board(goalArray);
@@ -141,7 +141,6 @@ public class Board {
         if (!(y.getClass() == this.getClass())) {
             return false;
         }
-
 
         Board yBoard = (Board) y;
         if (Arrays.deepEquals(this.board, yBoard.board)) {
@@ -274,20 +273,16 @@ public class Board {
     public static void main(String[] args) {
 
         int[][] testArray = {
-                { 1, 2, 3 },
-                { 4, 5, 0 },
-                { 7, 8, 6 }
+                { 1, 0 },
+                { 3, 2 }
+
         };
-        int[][] copyArray = {
-                { 1, 2, 3 },
-                { 4, 5, 0 },
-                { 7, 8, 6 }
-        };
+
         Board b = new Board(testArray);
-        Board c = new Board(copyArray);
-
-
-        System.out.println(b.equals(c));
+        for (Board dd : b.neighbors()) {
+            System.out.println(dd.toString());
+            System.out.println(dd.isGoal());
+        }
 
 
     }
