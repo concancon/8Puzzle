@@ -4,6 +4,7 @@ import java.util.Arrays;
 public class Board {
 
     private int[][] board;
+    private static int[][] goalArray;
     private int[] emptyTile;
 
     private void swapTiles(int x1, int y1, int x2, int y2) {
@@ -23,15 +24,26 @@ public class Board {
         }
     }
 
-    private static int[][] goalArray = {
-            { 1, 2, 3, 4 },
-            { 5, 6, 7, 8 },
-            { 9, 10, 11, 12 },
-            { 13, 14, 15, 0 }
+    private int[][] buildGoalArray() {
+        int counter = 0;
+        int[][] goalBoard = new int[dimension()][dimension()];
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
 
-    };
+                if (i == dimension() - 1 && j == dimension() - 1) {
+                    goalBoard[i][j] = 0;
+                }
+                else {
+                    goalBoard[i][j] = ++counter;
+                }
+            }
 
-    private static Board goalBoard = new Board(goalArray);
+        }
+        return goalBoard;
+
+    }
+
+    //private static Board goalBoard = new Board(goalArray);
 
 
     // create a board from an n-by-n array of tiles,
@@ -165,7 +177,7 @@ public class Board {
     // is this board the goal board?
     public boolean isGoal() {
 
-        return Arrays.deepEquals(this.board, goalBoard.board);
+        return Arrays.deepEquals(this.board, this.buildGoalArray());
     }
 
     // all neighboring boards
@@ -293,7 +305,8 @@ public class Board {
         };
 
         Board b = new Board(testArray);
-        System.out.println(b.manhattan());
+        b.buildGoalArray();
+        //System.out.println(b.manhattan());
         //for (Board dd : b.neighbors()) {
         //System.out.println(dd.manhattan());
         //System.out.println(dd.toString());
