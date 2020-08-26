@@ -24,8 +24,10 @@ public class Board {
     }
 
     private static int[][] goalArray = {
-            { 1, 2 },
-            { 3, 0 }
+            { 1, 2, 3, 4 },
+            { 5, 6, 7, 8 },
+            { 9, 10, 11, 12 },
+            { 13, 14, 15, 0 }
 
     };
 
@@ -101,11 +103,20 @@ public class Board {
                 else {
 
                     //2. what is content's corresponding index in terms of an n x n grid?
-                    x = content / dimension();
-                    y = content % dimension() - 1;
+                    int dimension = dimension();
+                    if (content % dimension() == 0) {
+                        x = content % dimension + (content / dimension) - 1;
+                        y = (content - 1) % dimension;   // 4:   3     // 8: 3
+                    }
+
+                    else {
+                        x = content / dimension;
+                        y = content % dimension - 1;
+                    }
                     if (y < 0) y = y * -1;
-                    indexCombination = x + y;
-                    shouldCombination = i + j;
+                    indexCombination = i + j;
+
+                    shouldCombination = x + y;
                     //3. what is the distance between should and is index
                     man += Math.abs(indexCombination - shouldCombination);
                 }
@@ -154,7 +165,7 @@ public class Board {
     // is this board the goal board?
     public boolean isGoal() {
 
-        return this.equals(goalBoard);
+        return Arrays.deepEquals(this.board, goalBoard.board);
     }
 
     // all neighboring boards
@@ -273,16 +284,22 @@ public class Board {
     public static void main(String[] args) {
 
         int[][] testArray = {
-                { 1, 0 },
-                { 3, 2 }
+
+                { 3, 2, 4, 8 },
+                { 1, 0, 6, 12 },
+                { 5, 10, 11, 7 },
+                { 9, 13, 15, 14 }
 
         };
 
         Board b = new Board(testArray);
-        for (Board dd : b.neighbors()) {
-            System.out.println(dd.toString());
-            System.out.println(dd.isGoal());
-        }
+        System.out.println(b.manhattan());
+        //for (Board dd : b.neighbors()) {
+        //System.out.println(dd.manhattan());
+        //System.out.println(dd.toString());
+
+        //System.out.println(dd.isGoal());
+        //}
 
 
     }
