@@ -102,6 +102,9 @@ public class Board {
         int x, y;
         int indexCombination;
         int shouldCombination;
+
+        int yDiff = 0;
+        int xDiff = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
 
@@ -126,11 +129,14 @@ public class Board {
                         y = content % dimension - 1;
                     }
                     if (y < 0) y = y * -1;
-                    indexCombination = i + j;
 
-                    shouldCombination = x + y;
+
+                    xDiff = Math.abs(x - i);
+                    yDiff = Math.abs(y - j);
+
+
                     //3. what is the distance between should and is index
-                    man += Math.abs(indexCombination - shouldCombination);
+                    man += (xDiff + yDiff);
                 }
 
 
@@ -297,16 +303,15 @@ public class Board {
 
         int[][] testArray = {
 
-                { 3, 2, 4, 8 },
-                { 1, 0, 6, 12 },
-                { 5, 10, 11, 7 },
-                { 9, 13, 15, 14 }
+                { 4, 1, 3 },
+                { 0, 2, 5 },
+                { 7, 8, 6 }
 
         };
 
         Board b = new Board(testArray);
         b.buildGoalArray();
-        //System.out.println(b.manhattan());
+        System.out.println(b.manhattan());
         //for (Board dd : b.neighbors()) {
         //System.out.println(dd.manhattan());
         //System.out.println(dd.toString());

@@ -50,7 +50,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Solver">
+  <component name="RunManager" selected="Application.Board">
     <configuration name="Board" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Board" />
       <module name="Algorithms, Part I" />
@@ -61,15 +61,15 @@
     <configuration name="Solver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Solver" />
       <module name="Algorithms, Part I" />
-      <option name="PROGRAM_PARAMETERS" value="puzzle2x2-00.txt" />
+      <option name="PROGRAM_PARAMETERS" value="puzzle3x3-unsolvable2.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Solver" />
         <item itemvalue="Application.Board" />
+        <item itemvalue="Application.Solver" />
       </list>
     </recent_temporary>
   </component>
@@ -87,8 +87,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Solver.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="7" />
+          <line>122</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Board.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

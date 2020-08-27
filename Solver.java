@@ -117,7 +117,7 @@ public class Solver {
                 tiles[i][j] = in.readInt();
         Board initial = new Board(tiles);
         StdOut.println("new board of size" + initial.dimension());
-        initial.isGoal();
+
 
         // solve the puzzle
         Solver solver = new Solver(initial);
