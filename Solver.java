@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Solver {
 
-    private static int numberOfMoves = 0;
+    private static int numberOfMoves;
     private SearchNode searchNode;
 
 
@@ -39,7 +39,7 @@ public class Solver {
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
         this.searchNode = new SearchNode(initial);
-
+        numberOfMoves = 0;
 
         //add the initial searchnode to Gametree and pQ
         gameTree.add(this.searchNode);
@@ -59,6 +59,8 @@ public class Solver {
             neighbors = pq.min().board.neighbors();
             // remove the initial node from PQ
             numberOfMoves++;
+            System.out.println("smallest item still on the pQ: \n" + pq.min().board);
+            //System.out.println("its previous is: \n" + pq.min().prev.board);
             pq.delMin();
 
             for (Board n : neighbors) {
@@ -75,18 +77,20 @@ public class Solver {
                 if (!newSearchNode.board.equals(previous)) {
                     pq.insert(newSearchNode);
                     gameTree.add(newSearchNode);
-                   /* System.out.println("new neigh \n" + newSearchNode.board.toString());
-                    System.out.println("Previous is: \n" + newSearchNode.prev.board);*/
+                    System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
+                                               + newSearchNode.priority);
+
+                    System.out.println("Previous is: \n" + newSearchNode.prev.board);
                 }
             }
 
             previous = pq.min().prev.board;
-            /*System.out.println("smallest item still on the pQ: \n" + pq.min().board);
-            System.out.println("its previous is: \n" + pq.min().prev.board);*/
+
+
         }
 
-       /* System.out.println("number of moves: " + (numberOfMoves));
-        System.out.println(pq.min().board.isGoal());*/
+        System.out.println("number of moves: " + moves());
+        System.out.println(pq.min().board.isGoal());
     }
 
     // is the initial board solvable? (see below)
