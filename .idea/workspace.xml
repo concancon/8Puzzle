@@ -30,6 +30,7 @@
   <component name="FindBugs-IDEA-Workspace">
     <analyzeAfterCompile>true</analyzeAfterCompile>
     <toolWindowToFront>false</toolWindowToFront>
+    <toolWindowEditorPreview>false</toolWindowEditorPreview>
   </component>
   <component name="ProjectId" id="1gSmu5CRakcslsbIypWDxY7rBCg" />
   <component name="PropertiesComponent">
@@ -87,12 +88,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Solver.java</url>
-          <line>122</line>
+          <line>124</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Board.java</url>
-          <line>313</line>
+          <line>315</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
