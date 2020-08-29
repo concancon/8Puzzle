@@ -19,6 +19,9 @@ public class Board {
         this.board = new int[b.dimension()][b.dimension()];
         for (int i = 0; i < b.dimension(); i++) {
             for (int j = 0; j < b.dimension(); j++) {
+                if (board[i][j] == 0) {
+                    emptyTile = new int[] { i, j };
+                }
                 this.board[i][j] = b.board[i][j];
             }
         }
@@ -313,7 +316,11 @@ public class Board {
 
         Board b = new Board(testArray);
         b.buildGoalArray();
-        System.out.println(b.twin());
+        Board firstTwin = b.twin();
+        Board secondTwin = firstTwin.twin();
+        System.out.println("Hamming: " + secondTwin.hamming());
+        System.out.println("Manhattan: " + secondTwin.manhattan());
+
 
         for (Board dd : b.neighbors()) {
 
