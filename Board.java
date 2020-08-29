@@ -318,8 +318,8 @@ public class Board {
         b.buildGoalArray();
         Board firstTwin = b.twin();
         Board secondTwin = firstTwin.twin();
-        System.out.println("Hamming: " + secondTwin.hamming());
-        System.out.println("Manhattan: " + secondTwin.manhattan());
+        //System.out.println("Hamming: " + secondTwin.hamming());
+        //System.out.println("Manhattan: " + secondTwin.manhattan());
 
 
         for (Board dd : b.neighbors()) {

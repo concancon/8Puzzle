@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Solver {
 
-    private static int numberOfMoves;
+    private int numberOfMoves;
     private SearchNode searchNode;
 
 
@@ -39,7 +39,7 @@ public class Solver {
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
         this.searchNode = new SearchNode(initial);
-        numberOfMoves = 0;
+        this.numberOfMoves = 0;
 
         //add the initial searchnode to Gametree and pQ
         gameTree.add(this.searchNode);
@@ -59,7 +59,7 @@ public class Solver {
             neighbors = pq.min().board.neighbors();
             // remove the initial node from PQ
             numberOfMoves++;
-            System.out.println("smallest item still on the pQ: \n" + pq.min().board);
+            //System.out.println("smallest item still on the pQ: \n" + pq.min().board);
             //System.out.println("its previous is: \n" + pq.min().prev.board);
             pq.delMin();
 
@@ -67,7 +67,7 @@ public class Solver {
 
 
                 SearchNode newSearchNode = new SearchNode(n);
-                //System.out.println("Priority: " + newSearchNode.priority);
+                System.out.println("Priority: " + newSearchNode.priority);
                 //System.out.println("previous is: " + previous.toString());
 
                 SearchNode previousSearchNode = new SearchNode(this.searchNode.board);
