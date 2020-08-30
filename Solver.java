@@ -8,7 +8,7 @@ public class Solver {
 
     private int numberOfMoves;
     private SearchNode searchNode;
-
+    private ArrayList<Board> solution;
 
     private class SearchNode implements Comparable<SearchNode> {
         private Board board;
@@ -40,6 +40,7 @@ public class Solver {
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
         this.searchNode = new SearchNode(initial);
         this.numberOfMoves = 0;
+        this.solution = new ArrayList<Board>();
 
         //add the initial searchnode to Gametree and pQ
         gameTree.add(this.searchNode);
@@ -70,7 +71,7 @@ public class Solver {
                 System.out.println("Priority: " + newSearchNode.priority);
                 //System.out.println("previous is: " + previous.toString());
 
-                SearchNode previousSearchNode = new SearchNode(this.searchNode.board);
+                SearchNode previousSearchNode = this.searchNode;
                 newSearchNode.prev = previousSearchNode;
 
 
@@ -89,8 +90,20 @@ public class Solver {
 
         }
 
-        System.out.println("number of moves: " + moves());
+
         System.out.println(pq.min().board.isGoal());
+        System.out.println("solution on gametree: " + gameTree.indexOf(pq.min()));
+        int indexOfWinner = gameTree.indexOf(pq.min());
+        System.out.println(gameTree.get(indexOfWinner).board);
+
+        while (gameTree.get(indexOfWinner).prev != null) {
+            solution.add(gameTree.get(indexOfWinner).prev.board);
+            System.out.println("gametree prev: " + gameTree.get(indexOfWinner).prev.board);
+            //System.out.println("its prev is:" + gameTree.get(indexOfWinner).prev.prev.board);
+            gameTree.set(indexOfWinner, gameTree.get(indexOfWinner).prev);
+        }
+
+        System.out.println("number of moves: " + moves());
     }
 
     // is the initial board solvable? (see below)
@@ -100,13 +113,14 @@ public class Solver {
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
-        return numberOfMoves;
+        return this.solution.size();
     }
 
     // sequence of boards in a shortest solution; null if unsolvable
     public Iterable<Board> solution() {
 
-        return new ArrayList<Board>();
+
+        return this.solution;
     }
 
     // test client (see below)
