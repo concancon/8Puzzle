@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Solver {
@@ -68,7 +69,7 @@ public class Solver {
 
 
                 SearchNode newSearchNode = new SearchNode(n);
-                System.out.println("Priority: " + newSearchNode.priority);
+                //System.out.println("Priority: " + newSearchNode.priority);
                 //System.out.println("previous is: " + previous.toString());
 
                 SearchNode previousSearchNode = this.searchNode;
@@ -78,10 +79,10 @@ public class Solver {
                 if (!newSearchNode.board.equals(previous)) {
                     pq.insert(newSearchNode);
                     gameTree.add(newSearchNode);
-                    System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
+                   /* System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
                                                + newSearchNode.priority);
 
-                    System.out.println("Previous is: \n" + newSearchNode.prev.board);
+                    System.out.println("Previous is: \n" + newSearchNode.prev.board);*/
                 }
             }
 
@@ -91,18 +92,26 @@ public class Solver {
         }
 
 
-        System.out.println(pq.min().board.isGoal());
-        System.out.println("solution on gametree: " + gameTree.indexOf(pq.min()));
+       /* System.out.println(pq.min().board.isGoal());
+        System.out.println("solution on gametree: " + gameTree.indexOf(pq.min()));*/
         int indexOfWinner = gameTree.indexOf(pq.min());
-        System.out.println(gameTree.get(indexOfWinner).board);
+        //System.out.println(gameTree.get(indexOfWinner).board);
 
         while (gameTree.get(indexOfWinner).prev != null) {
             solution.add(gameTree.get(indexOfWinner).prev.board);
             System.out.println("gametree prev: " + gameTree.get(indexOfWinner).prev.board);
-            //System.out.println("its prev is:" + gameTree.get(indexOfWinner).prev.prev.board);
+            //            System.out.println("its prev is:" + gameTree.get(indexOfWinner).prev.prev.board);
             gameTree.set(indexOfWinner, gameTree.get(indexOfWinner).prev);
         }
 
+
+        Collections.reverse(solution);
+        solution.add(pq.min().board); // add the goalboard to the end of the solution array
+        System.out.println("Boards in Solution");
+        for (Board s : solution) {
+
+            System.out.println(s);
+        }
         System.out.println("number of moves: " + moves());
     }
 
@@ -113,7 +122,7 @@ public class Solver {
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
-        return this.solution.size();
+        return this.solution.size() - 1;
     }
 
     // sequence of boards in a shortest solution; null if unsolvable
