@@ -40,23 +40,41 @@ public class Solver {
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
         SearchNode searchNode = new SearchNode(initial);
+        ////////////////////////////////
+
+        MinPQ<SearchNode> otherPq = new MinPQ<SearchNode>();
+        ArrayList<SearchNode> otherGameTree = new ArrayList<SearchNode>();
+        SearchNode otherSearchNode = new SearchNode(initial.twin());
 
 
+        //shared solution field for case unsolvable or solvable
         this.solution = new ArrayList<Board>();
 
         //add the initial searchnode to Gametree and pQ
         gameTree.add(searchNode);
         pq.insert(searchNode);
+        ////////////////////////
+
+        otherGameTree.add(otherSearchNode);
+        otherPq.insert(otherSearchNode);
+
 
         //add the neighbors to tree
         //FIRST create an array for conversion
         Iterable<Board> neighbors;
+        /////////////////////////
+        Iterable<Board> otherNeighbors;
+
 
         ////////////////////////////repetition
 
-        while (!pq.min().board.isGoal()) {
+        while (pq.min().board.isGoal() == otherPq.min().board.isGoal()) {
             searchNode = pq.delMin();
             neighbors = searchNode.board.neighbors();
+            ///////////////////////////////////////
+
+            otherSearchNode = otherPq.delMin();
+            otherNeighbors = otherSearchNode.board.neighbors();
 
 
             for (Board n : neighbors) {
@@ -89,6 +107,36 @@ public class Solver {
             }
 
 
+            for (Board n : otherNeighbors) {
+
+
+                SearchNode newSearchNode = new SearchNode(n);
+                newSearchNode.prev = otherSearchNode;
+
+
+                if (newSearchNode.prev.prev != null) {
+                    if (!newSearchNode.board.equals(otherSearchNode.prev.board)) {
+
+
+                        newSearchNode.numberOfMoves = otherSearchNode.numberOfMoves + 1;
+                        newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+                        otherPq.insert(newSearchNode);
+                        otherGameTree.add(newSearchNode);
+
+                    }
+                }
+                else { // for the inital's neighbors
+                    newSearchNode.numberOfMoves = otherSearchNode.numberOfMoves + 1;
+                    newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+
+
+                    otherPq.insert(newSearchNode);
+                    otherGameTree.add(newSearchNode);
+                }
+
+            }
+
+
         }
 
 
@@ -101,7 +149,7 @@ public class Solver {
 
         Collections.reverse(solution);
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
-        System.out.println("number of moves: " + moves());
+        //System.out.println("number of moves: " + moves());
     }
 
     // is the initial board solvable? (see below)
