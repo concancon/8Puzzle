@@ -71,7 +71,7 @@ public class Solver {
 
                 SearchNode previousSearchNode = this.searchNode;
                 newSearchNode.prev = previousSearchNode;
-                if (!previousSearchNode.board.equals(initial)) {
+                if (newSearchNode.prev.prev != null) {
                     if (!newSearchNode.board.equals(previousSearchNode.prev.board)) {
 
                         pq.insert(newSearchNode);
