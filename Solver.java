@@ -54,13 +54,13 @@ public class Solver {
         ////////////////////////////repetition
 
         while (!pq.min().board.isGoal()) {
-            this.searchNode = pq.min();
-            neighbors = pq.min().board.neighbors();
+            this.searchNode = pq.delMin();
+            neighbors = this.searchNode.board.neighbors();
             // remove the initial node from PQ
             numberOfMoves++;
             //System.out.println("smallest item still on the pQ: \n" + pq.min().board);
             //System.out.println("its previous is: \n" + pq.min().prev.board);
-            pq.delMin();
+
 
             for (Board n : neighbors) {
 
@@ -113,7 +113,7 @@ public class Solver {
 
             //System.out.println(s);
         }
-        System.out.println("number of moves: " + moves());
+        // System.out.println("number of moves: " + moves());
     }
 
     // is the initial board solvable? (see below)
