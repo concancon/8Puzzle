@@ -62,7 +62,7 @@
     <configuration name="Solver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Solver" />
       <module name="Algorithms, Part I" />
-      <option name="PROGRAM_PARAMETERS" value="puzzle08.txt" />
+      <option name="PROGRAM_PARAMETERS" value="puzzle04.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -93,7 +93,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Solver.java</url>
-          <line>151</line>
+          <line>147</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
