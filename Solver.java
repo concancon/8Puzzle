@@ -9,6 +9,7 @@ public class Solver {
 
 
     private ArrayList<Board> solution;
+    private boolean isSolvable = false;
 
     private class SearchNode implements Comparable<SearchNode> {
         private Board board;
@@ -140,6 +141,13 @@ public class Solver {
         }
 
 
+        if (pq.min().board.isGoal()) {
+            isSolvable = true;
+            //System.out.println("this puzzle is solvable! ");
+        }
+        //else {
+        //System.out.println("this puzzle is NOT solvable! ");
+        //}
         int indexOfWinner = gameTree.indexOf(pq.min());
         while (gameTree.get(indexOfWinner).prev != null) {
             solution.add(gameTree.get(indexOfWinner).prev.board);
@@ -149,6 +157,8 @@ public class Solver {
 
         Collections.reverse(solution);
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
+
+
         //System.out.println("number of moves: " + moves());
     }
 
