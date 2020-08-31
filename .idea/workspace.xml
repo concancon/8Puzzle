@@ -93,7 +93,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Solver.java</url>
-          <line>147</line>
+          <line>152</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

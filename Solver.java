@@ -70,16 +70,21 @@ public class Solver {
                 //System.out.println("previous is: " + previous.toString());
 
                 SearchNode previousSearchNode = this.searchNode;
+                newSearchNode.prev = previousSearchNode;
+                if (!previousSearchNode.board.equals(initial)) {
+                    if (!newSearchNode.board.equals(previousSearchNode.prev.board)) {
 
-
-                if (!newSearchNode.board.equals(previousSearchNode.board)) {
-                    newSearchNode.prev = previousSearchNode;
-                    pq.insert(newSearchNode);
-                    gameTree.add(newSearchNode);
+                        pq.insert(newSearchNode);
+                        gameTree.add(newSearchNode);
               /*      System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
                                                + newSearchNode.priority);
 
                     System.out.println("Previous is: \n" + newSearchNode.prev.board);*/
+                    }
+                }
+                else { // for the inital's neighbors
+                    pq.insert(newSearchNode);
+                    gameTree.add(newSearchNode);
                 }
 
             }
