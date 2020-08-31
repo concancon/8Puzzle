@@ -53,7 +53,7 @@ public class Solver {
 
         /////////////////////
 
-        Board previous = initial;
+        Board previous;
         ////////////////////////////repetition
 
         while (!pq.min().board.isGoal()) {
@@ -61,7 +61,7 @@ public class Solver {
             neighbors = pq.min().board.neighbors();
             // remove the initial node from PQ
             numberOfMoves++;
-            //System.out.println("smallest item still on the pQ: \n" + pq.min().board);
+            System.out.println("smallest item still on the pQ: \n" + pq.min().board);
             //System.out.println("its previous is: \n" + pq.min().prev.board);
             pq.delMin();
 
@@ -76,13 +76,13 @@ public class Solver {
                 newSearchNode.prev = previousSearchNode;
 
 
-                if (!newSearchNode.board.equals(previous)) {
+                if (!newSearchNode.board.equals(newSearchNode.prev.board)) {
                     pq.insert(newSearchNode);
                     gameTree.add(newSearchNode);
-                   /* System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
+                    System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
                                                + newSearchNode.priority);
 
-                    System.out.println("Previous is: \n" + newSearchNode.prev.board);*/
+                    System.out.println("Previous is: \n" + newSearchNode.prev.board);
                 }
             }
 
@@ -99,7 +99,7 @@ public class Solver {
 
         while (gameTree.get(indexOfWinner).prev != null) {
             solution.add(gameTree.get(indexOfWinner).prev.board);
-            System.out.println("gametree prev: " + gameTree.get(indexOfWinner).prev.board);
+            //System.out.println("gametree prev: " + gameTree.get(indexOfWinner).prev.board);
             //            System.out.println("its prev is:" + gameTree.get(indexOfWinner).prev.prev.board);
             gameTree.set(indexOfWinner, gameTree.get(indexOfWinner).prev);
         }
@@ -107,10 +107,10 @@ public class Solver {
 
         Collections.reverse(solution);
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
-        System.out.println("Boards in Solution");
+        //System.out.println("Boards in Solution");
         for (Board s : solution) {
 
-            System.out.println(s);
+            //System.out.println(s);
         }
         System.out.println("number of moves: " + moves());
     }
