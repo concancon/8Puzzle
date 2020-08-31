@@ -210,28 +210,6 @@ public class Board {
 
         //go through each element int the board and see if it has a 0 to its
 
-        //1. left    0, -1
-        if (x < dimension() && (y - 1) < dimension() && (y - 1) >= 0) {
-            //make a copy of our board
-            Board copyBoard = new Board(this);
-            copyBoard.swapTiles(x, y, x, y - 1);
-
-            listOfNeighbors.add(copyBoard);
-
-        }
-
-        //2. right   0, +1
-
-        if (x < dimension() && (y + 1) < dimension()) {
-
-            //System.out.println("i: " + x + " j: " + y);
-            //make a copy of our board
-            Board copyBoard = new Board(this);
-            copyBoard.swapTiles(x, y, x, y + 1);
-
-            listOfNeighbors.add(copyBoard);
-
-        }
 
         //3. top     +1, 0
         if (x + 1 < dimension() && y < dimension()) {
@@ -242,11 +220,37 @@ public class Board {
             listOfNeighbors.add(copyBoard);
 
         }
+
+
+        //1. left    0, -1
+        if (x < dimension() && (y - 1) < dimension() && (y - 1) >= 0) {
+            //make a copy of our board
+            Board copyBoard = new Board(this);
+            copyBoard.swapTiles(x, y, x, y - 1);
+
+            listOfNeighbors.add(copyBoard);
+
+        }
+
         //4. bottom   -1, 0
         if (x - 1 < dimension() && x - 1 >= 0 && y < dimension()) {
             //make a copy of our board
             Board copyBoard = new Board(this);
             copyBoard.swapTiles(x, y, x - 1, y);
+
+            listOfNeighbors.add(copyBoard);
+
+        }
+
+
+        //2. right   0, +1
+
+        if (x < dimension() && (y + 1) < dimension()) {
+
+            //System.out.println("i: " + x + " j: " + y);
+            //make a copy of our board
+            Board copyBoard = new Board(this);
+            copyBoard.swapTiles(x, y, x, y + 1);
 
             listOfNeighbors.add(copyBoard);
 

@@ -88,12 +88,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Board.java</url>
-          <line>319</line>
+          <line>323</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Solver.java</url>
-          <line>152</line>
+          <line>170</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

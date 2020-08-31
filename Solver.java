@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class Solver {
 
-    private int numberOfMoves;
+
     private SearchNode searchNode;
     private ArrayList<Board> solution;
 
@@ -15,12 +15,13 @@ public class Solver {
         private Board board;
         private SearchNode prev;
         private int priority;
-
+        private int numberOfMoves;
 
         public SearchNode(Board b) {
             this.board = b;
             this.prev = null;
-            this.priority = b.manhattan() + numberOfMoves;
+            this.numberOfMoves = 0;
+            this.priority = b.manhattan();
 
         }
 
@@ -40,7 +41,8 @@ public class Solver {
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
         this.searchNode = new SearchNode(initial);
-        this.numberOfMoves = 0;
+
+
         this.solution = new ArrayList<Board>();
 
         //add the initial searchnode to Gametree and pQ
@@ -57,7 +59,7 @@ public class Solver {
             this.searchNode = pq.delMin();
             neighbors = this.searchNode.board.neighbors();
             // remove the initial node from PQ
-            numberOfMoves++;
+
             //System.out.println("smallest item still on the pQ: \n" + pq.min().board);
             //System.out.println("its previous is: \n" + pq.min().prev.board);
 
@@ -71,18 +73,34 @@ public class Solver {
 
                 SearchNode previousSearchNode = this.searchNode;
                 newSearchNode.prev = previousSearchNode;
+
+
                 if (newSearchNode.prev.prev != null) {
                     if (!newSearchNode.board.equals(previousSearchNode.prev.board)) {
 
+
+                        newSearchNode.numberOfMoves = previousSearchNode.numberOfMoves + 1;
+                        newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
                         pq.insert(newSearchNode);
                         gameTree.add(newSearchNode);
-              /*      System.out.println("new neigh \n" + newSearchNode.board.toString() + "priority:"
-                                               + newSearchNode.priority);
+                        System.out.println(
+                                "new neigh \n" + newSearchNode.board.toString() + "priority:"
+                                        + newSearchNode.priority + "\n" + "numberOfMoves: "
+                                        + newSearchNode.numberOfMoves
+                        );
 
-                    System.out.println("Previous is: \n" + newSearchNode.prev.board);*/
+                        //System.out.println("Previous is: \n" + newSearchNode.prev.board);
                     }
                 }
                 else { // for the inital's neighbors
+                    newSearchNode.numberOfMoves = previousSearchNode.numberOfMoves + 1;
+                    newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+                    System.out.println(
+                            "new neigh \n" + newSearchNode.board.toString() + "priority: "
+                                    + newSearchNode.priority + "\n" + "numberOfMoves: "
+                                    + newSearchNode.numberOfMoves
+                    );
+
                     pq.insert(newSearchNode);
                     gameTree.add(newSearchNode);
                 }
@@ -113,7 +131,7 @@ public class Solver {
 
             //System.out.println(s);
         }
-        // System.out.println("number of moves: " + moves());
+        System.out.println("number of moves: " + moves());
     }
 
     // is the initial board solvable? (see below)
