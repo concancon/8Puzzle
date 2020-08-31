@@ -86,8 +86,6 @@ public class Solver {
                 }
             }
 
-            previous = pq.min().prev.board;
-
 
         }
 
