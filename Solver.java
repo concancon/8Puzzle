@@ -8,7 +8,6 @@ import java.util.Collections;
 public class Solver {
 
 
-    private SearchNode searchNode;
     private ArrayList<Board> solution;
 
     private class SearchNode implements Comparable<SearchNode> {
@@ -40,14 +39,14 @@ public class Solver {
         // INITIALIZATION
         MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
         ArrayList<SearchNode> gameTree = new ArrayList<SearchNode>();
-        this.searchNode = new SearchNode(initial);
+        SearchNode searchNode = new SearchNode(initial);
 
 
         this.solution = new ArrayList<Board>();
 
         //add the initial searchnode to Gametree and pQ
-        gameTree.add(this.searchNode);
-        pq.insert(this.searchNode);
+        gameTree.add(searchNode);
+        pq.insert(searchNode);
 
         //add the neighbors to tree
         //FIRST create an array for conversion
@@ -56,50 +55,32 @@ public class Solver {
         ////////////////////////////repetition
 
         while (!pq.min().board.isGoal()) {
-            this.searchNode = pq.delMin();
-            neighbors = this.searchNode.board.neighbors();
-            // remove the initial node from PQ
-
-            //System.out.println("smallest item still on the pQ: \n" + pq.min().board);
-            //System.out.println("its previous is: \n" + pq.min().prev.board);
+            searchNode = pq.delMin();
+            neighbors = searchNode.board.neighbors();
 
 
             for (Board n : neighbors) {
 
 
                 SearchNode newSearchNode = new SearchNode(n);
-                //System.out.println("Priority: " + newSearchNode.priority);
-                //System.out.println("previous is: " + previous.toString());
-
-                SearchNode previousSearchNode = this.searchNode;
-                newSearchNode.prev = previousSearchNode;
+                newSearchNode.prev = searchNode;
 
 
                 if (newSearchNode.prev.prev != null) {
-                    if (!newSearchNode.board.equals(previousSearchNode.prev.board)) {
+                    if (!newSearchNode.board.equals(searchNode.prev.board)) {
 
 
-                        newSearchNode.numberOfMoves = previousSearchNode.numberOfMoves + 1;
+                        newSearchNode.numberOfMoves = searchNode.numberOfMoves + 1;
                         newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
                         pq.insert(newSearchNode);
                         gameTree.add(newSearchNode);
-                   /*     System.out.println(
-                                "new neigh \n" + newSearchNode.board.toString() + "priority:"
-                                        + newSearchNode.priority + "\n" + "numberOfMoves: "
-                                        + newSearchNode.numberOfMoves
-                        );*/
 
-                        //System.out.println("Previous is: \n" + newSearchNode.prev.board);
                     }
                 }
                 else { // for the inital's neighbors
-                    newSearchNode.numberOfMoves = previousSearchNode.numberOfMoves + 1;
+                    newSearchNode.numberOfMoves = searchNode.numberOfMoves + 1;
                     newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
-                    /*System.out.println(
-                            "new neigh \n" + newSearchNode.board.toString() + "priority: "
-                                    + newSearchNode.priority + "\n" + "numberOfMoves: "
-                                    + newSearchNode.numberOfMoves
-                    );*/
+
 
                     pq.insert(newSearchNode);
                     gameTree.add(newSearchNode);
@@ -111,27 +92,16 @@ public class Solver {
         }
 
 
-       /* System.out.println(pq.min().board.isGoal());
-        System.out.println("solution on gametree: " + gameTree.indexOf(pq.min()));*/
         int indexOfWinner = gameTree.indexOf(pq.min());
-        //System.out.println(gameTree.get(indexOfWinner).board);
-
         while (gameTree.get(indexOfWinner).prev != null) {
             solution.add(gameTree.get(indexOfWinner).prev.board);
-            //System.out.println("gametree prev: " + gameTree.get(indexOfWinner).prev.board);
-            //System.out.println("its prev is:" + gameTree.get(indexOfWinner).prev.prev.board);
             gameTree.set(indexOfWinner, gameTree.get(indexOfWinner).prev);
         }
 
 
         Collections.reverse(solution);
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
-        //System.out.println("Boards in Solution");
-        for (Board s : solution) {
-
-            //System.out.println(s);
-        }
-        // System.out.println("number of moves: " + moves());
+        System.out.println("number of moves: " + moves());
     }
 
     // is the initial board solvable? (see below)
