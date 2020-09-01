@@ -165,11 +165,12 @@ public class Solver {
 
 
         System.out.println("number of moves: " + moves());
+        System.out.println("is it solvable " + isSolvable());
     }
 
     // is the initial board solvable? (see below)
     public boolean isSolvable() {
-        return true;
+        return this.isSolvable;
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
