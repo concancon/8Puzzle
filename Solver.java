@@ -10,6 +10,7 @@ public class Solver {
 
     private ArrayList<Board> solution;
     private boolean isSolvable = false;
+    private boolean alreadyFound = false;
 
     private class SearchNode implements Comparable<SearchNode> {
         private Board board;
@@ -74,69 +75,73 @@ public class Solver {
             neighbors = searchNode.board.neighbors();
             ///////////////////////////////////////
 
-            otherSearchNode = otherPq.delMin();
-            otherNeighbors = otherSearchNode.board.neighbors();
+
+            if (!alreadyFound) {
+                for (Board n : neighbors) {
 
 
-            for (Board n : neighbors) {
+                    SearchNode newSearchNode = new SearchNode(n);
+                    newSearchNode.prev = searchNode;
 
 
-                SearchNode newSearchNode = new SearchNode(n);
-                newSearchNode.prev = searchNode;
+                    if (newSearchNode.prev.prev != null) {
+                        if (!newSearchNode.board.equals(searchNode.prev.board)) {
 
 
-                if (newSearchNode.prev.prev != null) {
-                    if (!newSearchNode.board.equals(searchNode.prev.board)) {
+                            newSearchNode.numberOfMoves = searchNode.numberOfMoves + 1;
+                            newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+                            pq.insert(newSearchNode);
+                            gameTree.add(newSearchNode);
 
-
+                        }
+                    }
+                    else { // for the inital's neighbors
                         newSearchNode.numberOfMoves = searchNode.numberOfMoves + 1;
                         newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+
+
                         pq.insert(newSearchNode);
                         gameTree.add(newSearchNode);
-
+                        if (newSearchNode.board.isGoal()) alreadyFound = true;
                     }
+
                 }
-                else { // for the inital's neighbors
-                    newSearchNode.numberOfMoves = searchNode.numberOfMoves + 1;
-                    newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
-
-
-                    pq.insert(newSearchNode);
-                    gameTree.add(newSearchNode);
-                }
-
             }
 
 
-            for (Board n : otherNeighbors) {
+            if (!alreadyFound) {
+                otherSearchNode = otherPq.delMin();
+                otherNeighbors = otherSearchNode.board.neighbors();
+                for (Board n : otherNeighbors) {
 
 
-                SearchNode newSearchNode = new SearchNode(n);
-                newSearchNode.prev = otherSearchNode;
+                    SearchNode newSearchNode = new SearchNode(n);
+                    newSearchNode.prev = otherSearchNode;
 
 
-                if (newSearchNode.prev.prev != null) {
-                    if (!newSearchNode.board.equals(otherSearchNode.prev.board)) {
+                    if (newSearchNode.prev.prev != null) {
+                        if (!newSearchNode.board.equals(otherSearchNode.prev.board)) {
 
 
+                            newSearchNode.numberOfMoves = otherSearchNode.numberOfMoves + 1;
+                            newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+                            otherPq.insert(newSearchNode);
+                            otherGameTree.add(newSearchNode);
+
+                        }
+                    }
+                    else { // for the inital's neighbors
                         newSearchNode.numberOfMoves = otherSearchNode.numberOfMoves + 1;
                         newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+
+
                         otherPq.insert(newSearchNode);
                         otherGameTree.add(newSearchNode);
-
+                        if (newSearchNode.board.isGoal()) alreadyFound = true;
                     }
+
                 }
-                else { // for the inital's neighbors
-                    newSearchNode.numberOfMoves = otherSearchNode.numberOfMoves + 1;
-                    newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
-
-
-                    otherPq.insert(newSearchNode);
-                    otherGameTree.add(newSearchNode);
-                }
-
             }
-
 
         }
 
@@ -145,9 +150,9 @@ public class Solver {
             isSolvable = true;
             //System.out.println("this puzzle is solvable! ");
         }
-        //else {
-        //System.out.println("this puzzle is NOT solvable! ");
-        //}
+      /*  else {
+            System.out.println("this puzzle is NOT solvable! ");
+        }*/
         int indexOfWinner = gameTree.indexOf(pq.min());
         while (gameTree.get(indexOfWinner).prev != null) {
             solution.add(gameTree.get(indexOfWinner).prev.board);
@@ -159,7 +164,7 @@ public class Solver {
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
 
 
-        //System.out.println("number of moves: " + moves());
+        System.out.println("number of moves: " + moves());
     }
 
     // is the initial board solvable? (see below)
@@ -174,7 +179,9 @@ public class Solver {
 
     // sequence of boards in a shortest solution; null if unsolvable
     public Iterable<Board> solution() {
-
+        if (solution.size() == 0) {
+            return null;
+        }
 
         return this.solution;
     }
