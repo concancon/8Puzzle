@@ -164,9 +164,10 @@ public class Solver {
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
 
 
-        /*System.out.println("number of moves: " + moves());
+     /*   System.out.println("number of moves: " + moves());
         System.out.println("is it solvable " + isSolvable());
-        System.out.println("Solution: " + solution());*/
+        System.out.println("Solution: " + solution());
+        System.out.println("moves: " + moves());*/
     }
 
     // is the initial board solvable? (see below)
@@ -176,6 +177,9 @@ public class Solver {
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
+        if (!isSolvable()) {
+            return -1;
+        }
         return this.solution.size() - 1;
     }
 
