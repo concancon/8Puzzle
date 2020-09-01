@@ -89,7 +89,7 @@ public class Solver {
 
 
                             newSearchNode.numberOfMoves = searchNode.numberOfMoves + 1;
-                            newSearchNode.priority = newSearchNode.numberOfMoves + n.manhattan();
+                            newSearchNode.priority += newSearchNode.numberOfMoves;
                             pq.insert(newSearchNode);
                             gameTree.add(newSearchNode);
 
@@ -164,7 +164,7 @@ public class Solver {
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
 
 
-     /*   System.out.println("number of moves: " + moves());
+ /*       System.out.println("number of moves: " + moves());
         System.out.println("is it solvable " + isSolvable());
         System.out.println("Solution: " + solution());
         System.out.println("moves: " + moves());*/
