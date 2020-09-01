@@ -164,8 +164,9 @@ public class Solver {
         solution.add(pq.min().board); // add the goalboard to the end of the solution array
 
 
-        System.out.println("number of moves: " + moves());
+        /*System.out.println("number of moves: " + moves());
         System.out.println("is it solvable " + isSolvable());
+        System.out.println("Solution: " + solution());*/
     }
 
     // is the initial board solvable? (see below)
@@ -180,7 +181,7 @@ public class Solver {
 
     // sequence of boards in a shortest solution; null if unsolvable
     public Iterable<Board> solution() {
-        if (solution.size() == 0) {
+        if (!isSolvable) {
             return null;
         }
 
